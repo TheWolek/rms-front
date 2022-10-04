@@ -4,8 +4,13 @@
   <header>
     <div class="wrapper">
       <nav>
-        <RouterLink to="/"><img src="#" alt="logo" /></RouterLink>
-        <RouterLink to="/basket">Koszyk</RouterLink>
+        <RouterLink to="/"
+          ><img src="@/assets/logo.svg" alt="logo"
+        /></RouterLink>
+        <RouterLink to="/basket"
+          ><img src="@/assets/cart.png" alt="basket" id="basketIcon" />
+          Koszyk</RouterLink
+        >
       </nav>
     </div>
   </header>
@@ -25,5 +30,22 @@ header .wrapper {
 nav {
   display: flex;
   justify-content: space-between;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+nav a img {
+  width: 3em;
+}
+
+#basketIcon {
+  width: 5%;
+  margin-right: 0.5em;
+  width: 1.5em;
 }
 </style>
