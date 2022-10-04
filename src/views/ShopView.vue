@@ -23,7 +23,9 @@ export default {
   padding: 1em;
 }
 
-.categorySection + .categorySection {
-  margin-top: 1em;
+@media (min-width: 1024px) {
+  .itemTile:nth-child(5n) {
+    margin: 0;
+  }
 }
 </style>

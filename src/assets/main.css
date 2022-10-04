@@ -11,6 +11,14 @@ a,
   transition: 0.4s;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
 @media (hover: hover) {}
 
 @media (min-width: 1024px) {
