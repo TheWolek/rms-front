@@ -10,7 +10,7 @@ export default {
     ...mapState({
       items(state) {
         return state.shop.items.filter(
-          (item) => item.category_id == this.cat.id
+          (item) => item.category_id == this.cat.category_id
         );
       },
     }),

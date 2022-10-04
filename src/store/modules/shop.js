@@ -1,107 +1,39 @@
 const state = () => ({
-  items: [
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 1,
-      displayName: "cheeseburger",
-      price: 10,
-      category_id: 1,
-    },
-    {
-      id: 2,
-      displayName: "hamburger",
-      price: 11,
-      category_id: 1,
-    },
-    {
-      id: 3,
-      displayName: "fries",
-      price: 5,
-      category_id: 2,
-    },
-  ],
-  categories: [
-    {
-      id: 1,
-      category_displayName: "burgers",
-    },
-    {
-      id: 2,
-      category_displayName: "fries",
-    },
-    {
-      id: 3,
-      category_displayName: "drinks",
-    },
-    {
-      id: 4,
-      category_displayName: "burger set",
-    },
-  ],
+  items: [],
+  categories: [],
 });
 
-const mutations = {};
+const mutations = {
+  setItems(state, items) {
+    state.items = items;
+  },
+  setCategories(state, categories) {
+    state.categories = categories;
+  },
+};
 
-const actions = {};
+const actions = {
+  fetchItems({ commit, state }) {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": import.meta.env.VITE_API_KEY,
+      },
+    };
+    fetch("http://localhost:3000/dishes", requestOptions).then(async (res) => {
+      const resData = await res.json();
+      console.log(resData);
+      commit("setItems", resData);
+    });
+    fetch("http://localhost:3000/dishes/categories", requestOptions).then(
+      async (res) => {
+        const resData = await res.json();
+        commit("setCategories", resData);
+      }
+    );
+  },
+};
 
 export default {
   state,

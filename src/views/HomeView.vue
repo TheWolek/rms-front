@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import store from "../store";
+
+store.dispatch("shop/fetchItems");
+</script>
 
 <template>
   <header>
