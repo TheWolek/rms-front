@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../views/HomeView.vue";
+import ShopView from "../views/shopView.vue";
 import BasketView from "../views/BasketView.vue";
 import StationWorkView from "../views/StationWorkView.vue";
 import ActiveOrdersView from "../views/ActiveOrdersView.vue";
@@ -11,13 +12,19 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
       component: HomeView,
-    },
-    {
-      path: "/basket",
-      name: "basket",
-      component: BasketView,
+      children: [
+        {
+          path: "/",
+          name: "shop",
+          component: ShopView,
+        },
+        {
+          path: "/basket",
+          name: "basket",
+          component: BasketView,
+        },
+      ],
     },
     {
       path: "/stationwork/:type",
