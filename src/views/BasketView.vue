@@ -2,6 +2,7 @@
 import { mapState } from "vuex";
 
 import basketItem from "../components/shop/basket/item.vue";
+import store from "../store";
 
 export default {
   components: { basketItem },
@@ -31,13 +32,42 @@ export default {
           Koszyk jest pusty
         </div>
       </div>
-      <div class="orderBox" v-if="basketItems.length !== 0">
+      <div
+        class="orderBox"
+        v-if="basketItems.length !== 0 && !isActive_orderForm"
+      >
         <div class="totalPrice">
           <div>Łączna Kwota:</div>
           <div>100 zł</div>
         </div>
-        <div class="buyBtn">Kupuję i płacę</div>
+        <form>
+          <div class="form-group">
+            <label for="paymentMethod">Metoda płatności</label>
+            <select name="paymentMethod" id="paymentMethod">
+              <option value="1">Gotówka</option>
+              <option value="2">Karta płatnicza</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="radio">
+              <input
+                type="radio"
+                name="takeAway"
+                id="input"
+                value="0"
+                checked="checked"
+              />
+              Na miejscu
+            </label>
+            <label class="radio">
+              <input type="radio" name="takeAway" id="input" value="1" />
+              Na wynos
+            </label>
+          </div>
+          <div class="buyBtn">Kupuję i płacę</div>
+        </form>
       </div>
+      <div class="orderForm" v-if="isActive_orderForm"></div>
     </div>
   </div>
 </template>
@@ -60,6 +90,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   font-size: 1.15rem;
+  margin-bottom: 1.5em;
 }
 
 .totalPrice div:nth-child(2) {
@@ -76,6 +107,19 @@ h2 {
 }
 
 .item + .item {
+  margin-top: 1em;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+select {
+  padding: 0.5em;
+}
+
+.form-group + .form-group {
   margin-top: 1em;
 }
 
