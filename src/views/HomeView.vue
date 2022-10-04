@@ -23,8 +23,7 @@ header {
 }
 
 header .wrapper {
-  width: 65%;
-  margin: 0 auto;
+  padding: 0 2em;
 }
 
 nav {
@@ -47,5 +46,12 @@ nav a img {
   width: 5%;
   margin-right: 0.5em;
   width: 1.5em;
+}
+
+@media (min-width: 1024px) {
+  header .wrapper {
+    width: 65%;
+    margin: 0 auto;
+  }
 }
 </style>
