@@ -10,6 +10,7 @@ export default {
         item: this.item,
         newState: true,
       });
+      store.commit("shop/addToBasket", this.item);
     },
   },
 };

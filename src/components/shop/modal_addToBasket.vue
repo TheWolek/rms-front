@@ -1,5 +1,6 @@
 <script>
 import { mapState } from "vuex";
+import router from "../../router";
 import store from "../../store";
 
 export default {
@@ -9,8 +10,14 @@ export default {
     }),
   },
   methods: {
-    addToBasket() {
-      store.commit("shop/addToBasket", this.basketItem);
+    goToBasket() {
+      store.commit("shop/toggleModal_AddToBasket", {
+        item: {},
+        newState: false,
+      });
+      router.push("/basket");
+    },
+    closeModal() {
       store.commit("shop/toggleModal_AddToBasket", {
         item: {},
         newState: false,
@@ -23,10 +30,18 @@ export default {
   <div class="modalBg">
     <div class="modal" id="modal_addToBasket">
       <div class="header"><h2>Dodaj produkt do koszyka</h2></div>
-      <div class="content">{{ item }}</div>
+      <div class="content">
+        <div class="item">
+          <div class="imgWrap"></div>
+          <div class="details">
+            <div class="name">{{ basketItem.displayName }}</div>
+            <div class="price">{{ basketItem.price }} zł</div>
+          </div>
+        </div>
+      </div>
       <div class="bottomBar">
-        <div class="cancelBtn btn">Wróć do sklepu</div>
-        <div class="goToBasketBtn btn" @click="addToBasket">
+        <div class="cancelBtn btn" @click="closeModal">Wróć do sklepu</div>
+        <div class="goToBasketBtn btn" @click="goToBasket">
           Przejdź do koszyka
         </div>
       </div>
@@ -84,6 +99,30 @@ export default {
   cursor: pointer;
 }
 
+.item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 3em;
+}
+
+.imgWrap {
+  width: 75vw;
+  height: 400px;
+  background: #000;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+}
+
+.details .name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
 @media (min-width: 1024px) {
   .modal {
     width: 35%;
@@ -102,6 +141,15 @@ export default {
 
   .content {
     height: 80%;
+  }
+
+  .imgWrap {
+    width: 100%;
+    height: 400px;
+  }
+
+  .details .name {
+    font-size: 1.2rem;
   }
 }
 </style>

@@ -1,7 +1,18 @@
-<script setup>
+<script>
+import { mapState } from "vuex";
 import store from "../store";
 
 store.dispatch("shop/fetchItems");
+
+export default {
+  computed: {
+    ...mapState({
+      basketItemCount(state) {
+        return state.shop.basket.length;
+      },
+    }),
+  },
+};
 </script>
 
 <template>
@@ -12,8 +23,10 @@ store.dispatch("shop/fetchItems");
           ><img src="@/assets/logo.svg" alt="logo"
         /></RouterLink>
         <RouterLink to="/basket"
-          ><img src="@/assets/cart.png" alt="basket" id="basketIcon" />
-          Koszyk</RouterLink
+          ><img src="@/assets/cart.png" alt="basket" id="basketIcon" /> Koszyk
+          <div class="basketItemCounter" v-if="basketItemCount !== 0">
+            <span>{{ basketItemCount }}</span>
+          </div></RouterLink
         >
       </nav>
     </div>
@@ -50,6 +63,27 @@ nav a img {
   width: 5%;
   margin-right: 0.5em;
   width: 1.5em;
+}
+
+.basketItemCounter {
+  background: rgb(0, 125, 0);
+  color: #fff;
+  border-radius: 8px;
+  line-height: 0;
+  font-size: 11px;
+  font-weight: normal;
+  text-decoration: none;
+  height: 16px;
+  min-width: 16px;
+  display: flex;
+  justify-content: center;
+  padding: 0px 4px;
+  margin-left: 0.5em;
+}
+
+.basketItemCounter span {
+  position: absolute;
+  top: 8px;
 }
 
 @media (min-width: 1024px) {
