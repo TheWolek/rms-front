@@ -1,6 +1,9 @@
 const state = () => ({
   items: [],
   categories: [],
+  basket: [],
+  modalAddToBasket_isActive: false,
+  modalAddToBasket_item: {},
 });
 
 const mutations = {
@@ -9,6 +12,16 @@ const mutations = {
   },
   setCategories(state, categories) {
     state.categories = categories;
+  },
+  addToBasket(state, toAdd) {
+    state.basket.push(toAdd);
+  },
+  clearBasket(state) {
+    state.basket = [];
+  },
+  toggleModal_AddToBasket(state, data) {
+    state.modalAddToBasket_isActive = data.newState;
+    state.modalAddToBasket_item = data.item;
   },
 };
 

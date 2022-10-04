@@ -1,12 +1,21 @@
 <script>
 import { mapState } from "vuex";
+import store from "../../store";
 
 export default {
   props: ["item"],
+  methods: {
+    addToBasket() {
+      store.commit("shop/toggleModal_AddToBasket", {
+        item: this.item,
+        newState: true,
+      });
+    },
+  },
 };
 </script>
 <template>
-  <div class="itemTile" id="item.id">
+  <div class="itemTile" id="item.id" @click="addToBasket">
     <div class="imgWrap"></div>
     <div class="details">
       <div class="name">{{ item.displayName }}</div>
