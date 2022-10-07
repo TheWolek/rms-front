@@ -8,7 +8,7 @@ export default {
   computed: {
     ...mapState({
       basketItemCount(state) {
-        return state.shop.basket.length;
+        return state.shop.basketItemsAmount;
       },
     }),
   },

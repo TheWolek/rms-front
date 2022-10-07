@@ -1,9 +1,11 @@
 import router from "../../router";
+import calculateBasketItemAmount from "../../helpers/calculateBasketItemAmount";
 
 const state = () => ({
   items: [],
   categories: [],
   basket: [],
+  basketItemsAmount: 0,
   modalAddToBasket_isActive: false,
   modalAddToBasket_item: {},
   TYP_isAcitve: false,
@@ -18,10 +20,17 @@ const mutations = {
     state.categories = categories;
   },
   addToBasket(state, toAdd) {
-    state.basket.push(toAdd);
+    let itemInBasket = state.basket.findIndex((i) => i.dishId === toAdd.dishId);
+    if (itemInBasket !== -1) {
+      state.basket[itemInBasket].count += 1;
+    } else {
+      state.basket.push({ ...toAdd, count: 1 });
+    }
+    state.basketItemsAmount = calculateBasketItemAmount(state.basket);
   },
   clearBasket(state) {
     state.basket = [];
+    state.basketItemsAmount = 0;
   },
   toggleModal_AddToBasket(state, data) {
     state.modalAddToBasket_isActive = data.newState;
@@ -35,6 +44,11 @@ const mutations = {
   },
   removeItemFromBasket(state, indexToRemove) {
     state.basket.splice(indexToRemove, 1);
+    state.basketItemsAmount = calculateBasketItemAmount(state.basket);
+  },
+  setItemAmount(state, { itemIndex, newAmount }) {
+    state.basket[itemIndex].count = newAmount;
+    state.basketItemsAmount = calculateBasketItemAmount(state.basket);
   },
 };
 

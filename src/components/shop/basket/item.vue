@@ -7,6 +7,12 @@ export default {
     deleteItem() {
       store.commit("shop/removeItemFromBasket", this.itemIndex);
     },
+    changeAmount() {
+      store.commit("shop/setItemAmount", {
+        itemIndex: this.itemIndex,
+        newAmount: parseInt(this.item.count),
+      });
+    },
   },
 };
 </script>
@@ -18,6 +24,13 @@ export default {
     </div>
 
     <div class="rightSide">
+      <div class="count">
+        <select v-model="this.item.count" @change="changeAmount">
+          <option v-for="i in [1, 2, 3, 4, 5, 6, 7, 8, 9]" :key="i">
+            {{ i }}
+          </option>
+        </select>
+      </div>
       <div class="price">{{ item.price }} zł</div>
       <div class="removeItem" @click="deleteItem">Usuń</div>
     </div>
@@ -51,9 +64,12 @@ export default {
 }
 
 .removeItem {
-  margin-left: 1em;
   font-weight: 500;
   cursor: pointer;
+}
+
+.rightSide {
+  gap: 0.8em;
 }
 
 @media (min-width: 1024px) {
