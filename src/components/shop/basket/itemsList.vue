@@ -10,11 +10,6 @@ export default {
       basketItems: (state) => state.shop.basket,
     }),
   },
-  methods: {
-    redirectToHome() {
-      this.$router.push("/");
-    },
-  },
 };
 </script>
 <template>
@@ -27,10 +22,6 @@ export default {
         :itemIndex="index"
       />
     </div>
-    <div v-if="basketItems.length === 0" class="emptyBasketMsg">
-      <h1>Koszyk jest pusty</h1>
-      <button @click="redirectToHome">Dodaj produkty</button>
-    </div>
   </div>
 </template>
 <style scoped>
@@ -40,13 +31,6 @@ export default {
 
 .items {
   width: 100%;
-}
-
-.emptyBasketMsg {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  align-items: center;
 }
 
 h1 {

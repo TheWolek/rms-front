@@ -4,9 +4,10 @@ import { mapState } from "vuex";
 import orderBox from "../components/shop/basket/orderBox.vue";
 import itemsList from "../components/shop/basket/itemsList.vue";
 import TYP from "../components/shop/basket/TYP.vue";
+import emptyBasket from "../components/shop/basket/emptyBasket.vue";
 
 export default {
-  components: { orderBox, itemsList, TYP },
+  components: { orderBox, itemsList, TYP, emptyBasket },
   computed: {
     ...mapState({
       basketItems: (state) => state.shop.basket,
@@ -24,6 +25,7 @@ export default {
         basketItems.length !== 0 ? `(${basketItems.length})` : null
       }}</span>
     </h2>
+    <emptyBasket v-if="basketItems.length === 0" />
     <div class="wrapp" v-if="!TYP_isActive">
       <itemsList />
       <orderBox v-if="basketItems.length !== 0" />
