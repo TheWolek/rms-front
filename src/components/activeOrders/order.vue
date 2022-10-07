@@ -1,9 +1,11 @@
 <script>
-export default {};
+export default {
+  props: ["order"],
+};
 </script>
 <template>
   <div class="orderTile">
-    <h1>10</h1>
+    <h1>{{ order }}</h1>
   </div>
 </template>
 <style scoped>

@@ -1,8 +1,15 @@
 <script>
+import { mapState } from "vuex";
 import order from "./order.vue";
 
 export default {
   components: { order },
+  computed: {
+    ...mapState({
+      ordersInProgress: (state) => state.activeOrders.ordersInProgress,
+      ordersDone: (state) => state.activeOrders.ordersDone,
+    }),
+  },
 };
 </script>
 <template>
@@ -10,13 +17,21 @@ export default {
     <div class="inProgress">
       <h3>W przygotowaniu:</h3>
       <div class="orders">
-        <order />
+        <order
+          v-for="order in ordersInProgress"
+          :key="order.orderId"
+          :order="order.displayOrderId"
+        />
       </div>
     </div>
     <div class="ready">
       <h3>Do odebrania:</h3>
       <div class="orders">
-        <order />
+        <order
+          v-for="order in ordersDone"
+          :key="order.id"
+          :order="order.displayOrderId"
+        />
       </div>
     </div>
   </div>

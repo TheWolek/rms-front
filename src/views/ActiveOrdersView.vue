@@ -1,5 +1,7 @@
 <script>
 import activeOrders from "../components/activeOrders/activeOrders.vue";
+import store from "../store";
+store.dispatch("activeOrders/fetchOrders");
 
 export default {
   components: { activeOrders },
