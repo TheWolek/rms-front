@@ -16,19 +16,32 @@ export default {
 };
 </script>
 <template>
-  <div id="shopView">
+  <div>
     <modal_addToBasket v-if="modal_addToBasket_isActive" />
-    <CategorySection v-for="cat in categories" :key="cat.id" :cat="cat" />
+    <div id="shopView">
+      <CategorySection v-for="cat in categories" :key="cat.id" :cat="cat" />
+    </div>
   </div>
 </template>
 <style>
 #shopView {
   padding: 1em;
+  margin: 0 auto;
 }
 
 @media (min-width: 1024px) {
   .itemTile:nth-child(5n) {
     margin: 0;
+  }
+
+  #shopView {
+    width: 85%;
+  }
+}
+
+@media (min-width: 1400px) {
+  #shopView {
+    width: 75%;
   }
 }
 </style>

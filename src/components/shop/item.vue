@@ -61,11 +61,15 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  widows: 85%;
 }
 
 .itemTile .name {
   font-weight: 600;
+}
+
+.itemTile .basket {
+  display: flex;
+  align-items: center;
 }
 
 .itemTile .basket img {
@@ -88,7 +92,6 @@ export default {
   }
 
   .itemTile {
-    width: 22vw;
     height: 100px;
   }
 

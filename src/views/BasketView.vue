@@ -30,7 +30,7 @@ export default {
     </div>
   </div>
 </template>
-<style>
+<style scoped>
 h2 {
   padding: 0.2em 0.5em;
 }

@@ -125,7 +125,7 @@ export default {
 
 @media (min-width: 1024px) {
   .modal {
-    width: 35%;
+    width: 55%;
     height: 80vh;
   }
 
@@ -150,6 +150,12 @@ export default {
 
   .details .name {
     font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .modal {
+    width: 45%;
   }
 }
 </style>

@@ -29,6 +29,7 @@ export default {
 h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5em;
+  letter-spacing: 0.05em;
 }
 .categorySection + .categorySection {
   margin-top: 1em;
@@ -37,7 +38,7 @@ h3 {
 @media (min-width: 1024px) {
   .categorySection .items {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     row-gap: 2em;
   }
 }
