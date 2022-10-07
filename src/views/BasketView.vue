@@ -25,7 +25,7 @@ export default {
         basketItems.length !== 0 ? `(${basketItems.length})` : null
       }}</span>
     </h2>
-    <emptyBasket v-if="basketItems.length === 0" />
+    <emptyBasket v-if="basketItems.length === 0 && !TYP_isActive" />
     <div class="wrapp" v-if="!TYP_isActive">
       <itemsList />
       <orderBox v-if="basketItems.length !== 0" />

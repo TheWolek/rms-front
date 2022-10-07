@@ -76,7 +76,9 @@ const actions = {
     let items = [];
     for (let i = 0; i < state.basket.length; i++) {
       const el = state.basket[i];
-      items.push(el.dishId);
+      for (let j = 0; j < el.count; j++) {
+        items.push(el.dishId);
+      }
     }
     const requestOptions = {
       method: "POST",
