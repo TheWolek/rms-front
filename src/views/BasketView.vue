@@ -39,6 +39,10 @@ h2 {
   margin-top: 1em;
 }
 
+.basket {
+  margin: 0 auto;
+}
+
 @media (min-width: 768px) {
   .basket {
     padding: 0.5em 1.5em;
@@ -52,7 +56,13 @@ h2 {
   }
 
   .basket {
-    padding: 0.5em 10em;
+    width: 85%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .basket {
+    width: 75%;
   }
 }
 </style>
