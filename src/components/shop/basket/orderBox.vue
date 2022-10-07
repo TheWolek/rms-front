@@ -1,11 +1,26 @@
 <script>
 import { mapState } from "vuex";
+import store from "../../../store";
 
 export default {
+  data() {
+    return {
+      paymentMethod: 1,
+      takeAway: false,
+    };
+  },
   computed: {
     ...mapState({
       basketItems: (state) => state.shop.basket,
     }),
+  },
+  methods: {
+    submitOrder() {
+      store.dispatch("shop/submitOrder", {
+        paymentMethod: this.paymentMethod,
+        takeAway: this.takeAway,
+      });
+    },
   },
 };
 </script>
@@ -18,9 +33,9 @@ export default {
     <form>
       <div class="form-group">
         <label for="paymentMethod">Metoda płatności</label>
-        <select name="paymentMethod" id="paymentMethod">
-          <option value="1">Gotówka</option>
-          <option value="2">Karta płatnicza</option>
+        <select name="paymentMethod" id="paymentMethod" v-model="paymentMethod">
+          <option :value="1">Gotówka</option>
+          <option :value="2">Karta płatnicza</option>
         </select>
       </div>
       <div class="form-group">
@@ -28,18 +43,23 @@ export default {
           <input
             type="radio"
             name="takeAway"
-            id="input"
-            value="0"
+            v-model="takeAway"
+            :value="false"
             checked="checked"
           />
           Na miejscu
         </label>
         <label class="radio">
-          <input type="radio" name="takeAway" id="input" value="1" />
+          <input
+            type="radio"
+            name="takeAway"
+            v-model="takeAway"
+            :value="true"
+          />
           Na wynos
         </label>
       </div>
-      <div class="buyBtn">Kupuję i płacę</div>
+      <div class="buyBtn" @click="submitOrder">Kupuję i płacę</div>
     </form>
   </div>
 </template>

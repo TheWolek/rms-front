@@ -3,26 +3,28 @@ import { mapState } from "vuex";
 
 import orderBox from "../components/shop/basket/orderBox.vue";
 import itemsList from "../components/shop/basket/itemsList.vue";
-import store from "../store";
+import TYP from "../components/shop/basket/TYP.vue";
 
 export default {
-  components: { orderBox, itemsList },
+  components: { orderBox, itemsList, TYP },
   computed: {
     ...mapState({
       basketItems: (state) => state.shop.basket,
+      TYP_isActive: (state) => state.shop.TYP_isAcitve,
     }),
   },
 };
 </script>
 <template>
   <div class="basket">
-    <h2>
+    <TYP v-if="TYP_isActive" />
+    <h2 v-if="!TYP_isActive">
       Koszyk
       <span>{{
         basketItems.length !== 0 ? `(${basketItems.length})` : null
       }}</span>
     </h2>
-    <div class="wrapp">
+    <div class="wrapp" v-if="!TYP_isActive">
       <itemsList />
       <orderBox v-if="basketItems.length !== 0" />
     </div>

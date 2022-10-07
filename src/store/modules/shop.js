@@ -1,9 +1,13 @@
+import router from "../../router";
+
 const state = () => ({
   items: [],
   categories: [],
   basket: [],
   modalAddToBasket_isActive: false,
   modalAddToBasket_item: {},
+  TYP_isAcitve: false,
+  TYPData: {},
 });
 
 const mutations = {
@@ -23,6 +27,12 @@ const mutations = {
     state.modalAddToBasket_isActive = data.newState;
     state.modalAddToBasket_item = data.item;
   },
+  setTYPData(state, data) {
+    state.TYPData = data;
+  },
+  showTYP(state, newState) {
+    state.TYP_isAcitve = newState;
+  },
 };
 
 const actions = {
@@ -36,7 +46,6 @@ const actions = {
     };
     fetch("http://localhost:3000/dishes", requestOptions).then(async (res) => {
       const resData = await res.json();
-      console.log(resData);
       commit("setItems", resData);
     });
     fetch("http://localhost:3000/dishes/categories", requestOptions).then(
@@ -45,6 +54,37 @@ const actions = {
         commit("setCategories", resData);
       }
     );
+  },
+  submitOrder({ commit, state }, basketOptions) {
+    let items = [];
+    for (let i = 0; i < state.basket.length; i++) {
+      const el = state.basket[i];
+      items.push(el.dishId);
+    }
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": import.meta.env.VITE_API_KEY,
+      },
+      body: JSON.stringify({
+        items: items,
+        paymentMethod: basketOptions.paymentMethod,
+        takeAway: basketOptions.takeAway,
+      }),
+    };
+
+    fetch("http://localhost:3000/orders", requestOptions).then(async (res) => {
+      const resData = await res.json();
+      commit("clearBasket");
+      commit("setTYPData", resData);
+      commit("showTYP", true);
+
+      setTimeout(() => {
+        commit("showTYP", false);
+        router.push("/");
+      }, 6000);
+    });
   },
 };
 
