@@ -33,6 +33,9 @@ const mutations = {
   showTYP(state, newState) {
     state.TYP_isAcitve = newState;
   },
+  removeItemFromBasket(state, indexToRemove) {
+    state.basket.splice(indexToRemove, 1);
+  },
 };
 
 const actions = {

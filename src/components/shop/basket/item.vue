@@ -1,6 +1,13 @@
 <script>
+import store from "../../../store";
+
 export default {
-  props: ["item"],
+  props: ["item", "itemIndex"],
+  methods: {
+    deleteItem() {
+      store.commit("shop/removeItemFromBasket", this.itemIndex);
+    },
+  },
 };
 </script>
 <template>
@@ -12,7 +19,7 @@ export default {
 
     <div class="rightSide">
       <div class="price">{{ item.price }} zł</div>
-      <div class="removeItem">Usuń</div>
+      <div class="removeItem" @click="deleteItem">Usuń</div>
     </div>
   </div>
 </template>

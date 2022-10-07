@@ -20,7 +20,12 @@ export default {
 <template>
   <div class="items">
     <div class="itemsList">
-      <item v-for="item in basketItems" :key="item.dishId" :item="item" />
+      <item
+        v-for="(item, index) in basketItems"
+        :key="index"
+        :item="item"
+        :itemIndex="index"
+      />
     </div>
     <div v-if="basketItems.length === 0" class="emptyBasketMsg">
       <h1>Koszyk jest pusty</h1>
