@@ -3,6 +3,10 @@ import activeOrders from "../components/activeOrders/activeOrders.vue";
 import store from "../store";
 store.dispatch("activeOrders/fetchOrders");
 
+const interval = setInterval(() => {
+  store.dispatch("activeOrders/fetchOrders");
+}, 5000);
+
 export default {
   components: { activeOrders },
 };
