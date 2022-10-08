@@ -17,4 +17,10 @@ export default {
     <item v-for="item in items" :key="item.id" :data="item" />
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.station {
+  display: grid;
+  grid-template-columns: repeat(4, 300px);
+  gap: 2em;
+}
+</style>
