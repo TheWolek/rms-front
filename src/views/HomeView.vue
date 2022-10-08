@@ -2,8 +2,6 @@
 import { mapState } from "vuex";
 import store from "../store";
 
-store.dispatch("shop/fetchItems");
-
 export default {
   computed: {
     ...mapState({
@@ -11,6 +9,9 @@ export default {
         return state.shop.basketItemsAmount;
       },
     }),
+  },
+  mounted() {
+    store.dispatch("shop/fetchItems");
   },
 };
 </script>

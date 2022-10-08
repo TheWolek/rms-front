@@ -1,5 +1,6 @@
 <script>
 import { mapState } from "vuex";
+import store from "../../store";
 import order from "./order.vue";
 
 export default {
@@ -9,6 +10,12 @@ export default {
       ordersInProgress: (state) => state.activeOrders.ordersInProgress,
       ordersDone: (state) => state.activeOrders.ordersDone,
     }),
+  },
+  mounted() {
+    store.dispatch("activeOrders/fetchOrders");
+    const interval = setInterval(() => {
+      store.dispatch("activeOrders/fetchOrders");
+    }, 5000);
   },
 };
 </script>
