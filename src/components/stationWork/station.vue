@@ -20,7 +20,8 @@ export default {
 <style scoped>
 .station {
   display: grid;
-  grid-template-columns: repeat(4, 300px);
+  grid-template-columns: repeat(auto-fit, 200px);
   gap: 2em;
+  flex-wrap: wrap;
 }
 </style>

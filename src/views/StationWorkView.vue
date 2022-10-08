@@ -11,9 +11,11 @@ export default {
   },
   components: { station },
   mounted() {
+    //store.commit("stationWork/clear");
     const route = useRoute();
     this.station = route.params.type;
     store.dispatch("stationWork/fetchItems", this.station);
+    store.commit("stationWork/setStation", this.station);
   },
 };
 </script>
