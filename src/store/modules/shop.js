@@ -61,16 +61,20 @@ const actions = {
         "x-api-key": import.meta.env.VITE_API_KEY,
       },
     };
-    fetch("http://localhost:3000/dishes", requestOptions).then(async (res) => {
+    fetch(
+      `http://${import.meta.env.VITE_API_HOST}:3000/dishes`,
+      requestOptions
+    ).then(async (res) => {
       const resData = await res.json();
       commit("setItems", resData);
     });
-    fetch("http://localhost:3000/dishes/categories", requestOptions).then(
-      async (res) => {
-        const resData = await res.json();
-        commit("setCategories", resData);
-      }
-    );
+    fetch(
+      `http://${import.meta.env.VITE_API_HOST}:3000/dishes/categories`,
+      requestOptions
+    ).then(async (res) => {
+      const resData = await res.json();
+      commit("setCategories", resData);
+    });
   },
   submitOrder({ commit, state }, basketOptions) {
     let items = [];
@@ -93,7 +97,10 @@ const actions = {
       }),
     };
 
-    fetch("http://localhost:3000/orders", requestOptions).then(async (res) => {
+    fetch(
+      `http://${import.meta.env.VITE_API_HOST}:3000/orders`,
+      requestOptions
+    ).then(async (res) => {
       const resData = await res.json();
       commit("clearBasket");
       commit("setTYPData", resData);

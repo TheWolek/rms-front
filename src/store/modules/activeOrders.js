@@ -19,22 +19,23 @@ const actions = {
         "x-api-key": import.meta.env.VITE_API_KEY,
       },
     };
-    fetch("http://localhost:3000/orders/active", requestOptions).then(
-      async (res) => {
-        const resData = await res.json();
-        let inProgress = [];
-        let ready = [];
+    fetch(
+      `http://${import.meta.env.VITE_API_HOST}:3000/orders/active`,
+      requestOptions
+    ).then(async (res) => {
+      const resData = await res.json();
+      let inProgress = [];
+      let ready = [];
 
-        resData.forEach((order) => {
-          if (order.status === "rdy") {
-            ready.push(order);
-          } else {
-            inProgress.push(order);
-          }
-        });
-        commit("setOrders", { inProgress: inProgress, done: ready });
-      }
-    );
+      resData.forEach((order) => {
+        if (order.status === "rdy") {
+          ready.push(order);
+        } else {
+          inProgress.push(order);
+        }
+      });
+      commit("setOrders", { inProgress: inProgress, done: ready });
+    });
   },
 };
 

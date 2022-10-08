@@ -31,12 +31,13 @@ const actions = {
         "x-api-key": import.meta.env.VITE_API_KEY,
       },
     };
-    fetch(`http://localhost:3000/stationwork/${station}`, requestOptions).then(
-      async (res) => {
-        const resData = await res.json();
-        commit("setStationWorkItems", resData);
-      }
-    );
+    fetch(
+      `http://${import.meta.env.VITE_API_HOST}:3000/stationwork/${station}`,
+      requestOptions
+    ).then(async (res) => {
+      const resData = await res.json();
+      commit("setStationWorkItems", resData);
+    });
   },
   changeItemStatus({ state, commit, dispatch }, { itemId, newStatus }) {
     const requestOptions = {
@@ -50,17 +51,18 @@ const actions = {
         newStatus: newStatus,
       }),
     };
-    fetch(`http://localhost:3000/stationwork/complete`, requestOptions).then(
-      async (res) => {
-        const resData = await res.json();
+    fetch(
+      `http://${import.meta.env.VITE_API_HOST}:3000/stationwork/complete`,
+      requestOptions
+    ).then(async (res) => {
+      const resData = await res.json();
 
-        if (newStatus === "rdyToPck" || newStatus === "done") {
-          dispatch("fetchItems", state.station);
-        } else {
-          commit("changeItemStatus", { itemId: itemId, newStatus: newStatus });
-        }
+      if (newStatus === "rdyToPck" || newStatus === "done") {
+        dispatch("fetchItems", state.station);
+      } else {
+        commit("changeItemStatus", { itemId: itemId, newStatus: newStatus });
       }
-    );
+    });
   },
   changeOrderStatus({ state, commit, dispatch }, { orderId, newStatus }) {
     const requestOptions = {
@@ -73,11 +75,12 @@ const actions = {
         status: newStatus,
       }),
     };
-    fetch(`http://localhost:3000/orders/${orderId}`, requestOptions).then(
-      async (res) => {
-        dispatch("fetchItems", state.station);
-      }
-    );
+    fetch(
+      `http://${import.meta.env.VITE_API_HOST}:3000/orders/${orderId}`,
+      requestOptions
+    ).then(async (res) => {
+      dispatch("fetchItems", state.station);
+    });
   },
   closeOrder({ state, commit, dispatch }, orderId) {
     const requestOptions = {
@@ -88,7 +91,7 @@ const actions = {
       },
     };
     fetch(
-      `http://localhost:3000/orders/${orderId}/finish`,
+      `http://${import.meta.env.VITE_API_HOST}:3000/orders/${orderId}/finish`,
       requestOptions
     ).then(async (res) => {
       dispatch("fetchItems", state.station);
