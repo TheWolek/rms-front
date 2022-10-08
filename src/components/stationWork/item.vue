@@ -13,7 +13,8 @@ export default {
         let inProg = false;
         for (let i = 0; i < this.data.items.length; i++) {
           const item = this.data.items[i];
-          if (item.dishStatus === "inProg") inProg = true;
+          if (item.dishStatus === "inProg" || item.dishStatus === "rdyToPck")
+            inProg = true;
         }
         return inProg;
       } else {
@@ -33,7 +34,19 @@ export default {
         return ready;
       }
     },
-    OrderInProgress() {},
+    orderStatus() {
+      if (this.station === "collect") {
+        if (this.data.status === "rdy") return "Do wydania";
+        if (this.OrderIsReady) return "Do spakowania";
+        if (this.data.status === "new") return "W przygotowaniu";
+      }
+    },
+    orderIsComplete() {
+      if (this.station === "collect") {
+        if (this.data.status === "rdy") return true;
+        return false;
+      }
+    },
   },
   methods: {
     close() {
@@ -55,6 +68,18 @@ export default {
           itemId: this.data.id,
           newStatus: "inProg",
         });
+
+      if (this.station === "collect") {
+        if (this.data.status === "new") {
+          store.dispatch("stationWork/changeOrderStatus", {
+            orderId: this.data.orderId,
+            newStatus: "rdy",
+          });
+        }
+        if (this.data.status === "rdy") {
+          store.dispatch("stationWork/closeOrder", this.data.orderId);
+        }
+      }
     },
   },
 };
@@ -64,7 +89,7 @@ export default {
     class="workItem"
     v-on:dblclick="close"
     @click="inProg"
-    :class="{ inProg: inProgress, ready: OrderIsReady }"
+    :class="{ inProg: inProgress, ready: OrderIsReady, blink: orderIsComplete }"
   >
     <div v-if="this.station !== 'collect'">
       <h5>{{ data.dishStatus }}</h5>
@@ -75,6 +100,7 @@ export default {
         Zamówienie: <span class="bold">{{ data.displayOrderId }}</span>
       </h3>
       <h4>{{ data.takeAway ? "Na wynos" : "Na miejscu" }}</h4>
+      <h4 class="bold">{{ orderStatus }}</h4>
       <ul class="itemList">
         <li v-for="item in data.items">
           <h5>{{ item.dishStatus }}</h5>
@@ -100,6 +126,19 @@ export default {
   background: rgb(138, 245, 155);
 }
 
+.blink {
+  animation: blinkingBorder 1s infinite;
+}
+
+@keyframes blinkingBorder {
+  0% {
+    outline: 8px rgb(253, 120, 11) solid;
+  }
+  100% {
+    outline: none;
+  }
+}
+
 h3 {
   font-size: 1.04rem;
 }
@@ -109,7 +148,7 @@ h4 {
   font-weight: normal;
 }
 
-span.bold {
+.bold {
   font-weight: 700;
 }
 

@@ -55,13 +55,44 @@ const actions = {
         const resData = await res.json();
 
         if (newStatus === "rdyToPck" || newStatus === "done") {
-          console.log();
           dispatch("fetchItems", state.station);
         } else {
           commit("changeItemStatus", { itemId: itemId, newStatus: newStatus });
         }
       }
     );
+  },
+  changeOrderStatus({ state, commit, dispatch }, { orderId, newStatus }) {
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": import.meta.env.VITE_API_KEY,
+      },
+      body: JSON.stringify({
+        status: newStatus,
+      }),
+    };
+    fetch(`http://localhost:3000/orders/${orderId}`, requestOptions).then(
+      async (res) => {
+        dispatch("fetchItems", state.station);
+      }
+    );
+  },
+  closeOrder({ state, commit, dispatch }, orderId) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": import.meta.env.VITE_API_KEY,
+      },
+    };
+    fetch(
+      `http://localhost:3000/orders/${orderId}/finish`,
+      requestOptions
+    ).then(async (res) => {
+      dispatch("fetchItems", state.station);
+    });
   },
 };
 
