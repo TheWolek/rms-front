@@ -9,9 +9,31 @@ export default {
       station: (state) => state.stationWork.station,
     }),
     inProgress() {
-      if (this.data.dishStatus === "inProg") return true;
-      return false;
+      if (this.station === "collect") {
+        let inProg = false;
+        for (let i = 0; i < this.data.items.length; i++) {
+          const item = this.data.items[i];
+          if (item.dishStatus === "inProg") inProg = true;
+        }
+        return inProg;
+      } else {
+        if (this.data.dishStatus === "inProg") return true;
+        return false;
+      }
     },
+    OrderIsReady() {
+      if (this.station === "collect") {
+        let ready = false;
+        for (let i = 0; i < this.data.items.length; i++) {
+          const item = this.data.items[i];
+          if (item.dishStatus === "done") ready = true;
+          else ready = false;
+        }
+
+        return ready;
+      }
+    },
+    OrderInProgress() {},
   },
   methods: {
     close() {
@@ -42,10 +64,24 @@ export default {
     class="workItem"
     v-on:dblclick="close"
     @click="inProg"
-    :class="{ inProg: inProgress }"
+    :class="{ inProg: inProgress, ready: OrderIsReady }"
   >
-    <h5>{{ data.dishStatus }}</h5>
-    <h3>{{ data.displayName }}</h3>
+    <div v-if="this.station !== 'collect'">
+      <h5>{{ data.dishStatus }}</h5>
+      <h3>{{ data.displayName }}</h3>
+    </div>
+    <div v-if="this.station === 'collect'">
+      <h3>
+        Zamówienie: <span class="bold">{{ data.displayOrderId }}</span>
+      </h3>
+      <h4>{{ data.takeAway ? "Na wynos" : "Na miejscu" }}</h4>
+      <ul class="itemList">
+        <li v-for="item in data.items">
+          <h5>{{ item.dishStatus }}</h5>
+          <h3>{{ item.displayName }}</h3>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -58,5 +94,29 @@ export default {
 
 .inProg {
   background: rgb(250, 250, 77);
+}
+
+.ready {
+  background: rgb(138, 245, 155);
+}
+
+h3 {
+  font-size: 1.04rem;
+}
+
+h4 {
+  font-size: 0.85rem;
+  font-weight: normal;
+}
+
+span.bold {
+  font-weight: 700;
+}
+
+ul {
+  list-style: none;
+  padding: 0.5em 0 0 0;
+  border-top: 1px solid #000;
+  margin-top: 0.5em;
 }
 </style>
