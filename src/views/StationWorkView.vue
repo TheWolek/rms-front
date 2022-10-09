@@ -30,11 +30,11 @@ export default {
   width: 100vw;
   height: 100vh;
   background: #404040;
-  color: #e9e9e9;
   padding: 1em;
 }
 
 h2 {
   margin-bottom: 1em;
+  color: #eeee;
 }
 </style>
