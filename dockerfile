@@ -1,13 +1,19 @@
 # syntax=docker/dockerfile:1
 
-FROM node:15.12.0
+FROM node as builder
 
-WORKDIR /app
-
+WORKDIR /tmp
 COPY ["package.json", "package-lock.json", "./"]
+RUN npm install --production
 
+FROM node as dev
+COPY --from=builder /tmp/node_modules /app
+COPY . .
 RUN npm install
 
+FROM node as production
+
+COPY --from=builder /tmp/node_modules /app
 COPY . .
 
 CMD ["npm", "run", "dev"]
