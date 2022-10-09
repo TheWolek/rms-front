@@ -4,6 +4,7 @@ FROM node as builder
 
 WORKDIR /tmp
 COPY ["package.json", "package-lock.json", "./"]
+RUN npm install -g vite
 RUN npm install --production
 
 FROM node as dev
