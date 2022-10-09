@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../views/HomeView.vue";
-import ShopView from "../views/shopView.vue";
+import ShopView from "../views/ShopView.vue";
 import BasketView from "../views/BasketView.vue";
 import StationWorkView from "../views/StationWorkView.vue";
 import ActiveOrdersView from "../views/ActiveOrdersView.vue";

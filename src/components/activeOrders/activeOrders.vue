@@ -1,7 +1,7 @@
 <script>
 import { mapState } from "vuex";
 import store from "../../store";
-import order from "./order.vue";
+import order from "./Order.vue";
 
 export default {
   components: { order },

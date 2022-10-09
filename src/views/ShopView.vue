@@ -1,7 +1,7 @@
 <script>
 import { mapState } from "vuex";
-import CategorySection from "../components/shop/categorySection.vue";
-import modal_addToBasket from "../components/shop/modal_addToBasket.vue";
+import CategorySection from "../components/shop/CategorySection.vue";
+import modal_addToBasket from "../components/shop/Modal_addToBasket.vue";
 
 export default {
   components: { CategorySection, modal_addToBasket },

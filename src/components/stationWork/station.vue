@@ -1,7 +1,7 @@
 <script>
 import { mapState } from "vuex";
 
-import item from "./item.vue";
+import item from "./Item.vue";
 
 export default {
   components: { item },

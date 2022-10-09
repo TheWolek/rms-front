@@ -1,10 +1,10 @@
 <script>
 import { mapState } from "vuex";
 
-import orderBox from "../components/shop/basket/orderBox.vue";
-import itemsList from "../components/shop/basket/itemsList.vue";
+import orderBox from "../components/shop/basket/OrderBox.vue";
+import itemsList from "../components/shop/basket/ItemsList.vue";
 import TYP from "../components/shop/basket/TYP.vue";
-import emptyBasket from "../components/shop/basket/emptyBasket.vue";
+import emptyBasket from "../components/shop/basket/EmptyBasket.vue";
 
 export default {
   components: { orderBox, itemsList, TYP, emptyBasket },
