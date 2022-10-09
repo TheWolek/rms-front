@@ -1,7 +1,7 @@
 <script>
 import { useRoute } from "vue-router";
 import store from "../store";
-import station from "../components/stationWork/Station.vue";
+import station from "../components/stationWork/station.vue";
 
 export default {
   data() {

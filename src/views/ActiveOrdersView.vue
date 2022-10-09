@@ -1,5 +1,5 @@
 <script>
-import activeOrders from "../components/activeOrders/ActiveOrders.vue";
+import activeOrders from "../components/activeOrders/activeOrders.vue";
 import store from "../store";
 
 export default {

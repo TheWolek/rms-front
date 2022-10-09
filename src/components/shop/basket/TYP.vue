@@ -1,7 +1,7 @@
 <script>
 import { mapState } from "vuex";
 
-import typItem from "./TypItem.vue";
+import typItem from "./typItem.vue";
 
 export default {
   components: { typItem },
