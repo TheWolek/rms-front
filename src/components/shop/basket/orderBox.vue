@@ -12,7 +12,11 @@ export default {
   computed: {
     ...mapState({
       basketItems: (state) => state.shop.basket,
+      basketTotalValue: (state) => state.shop.basketTotalValue,
     }),
+    formattedBasketTotalValue() {
+      return this.basketTotalValue.toFixed(2);
+    },
   },
   methods: {
     submitOrder() {
@@ -28,7 +32,7 @@ export default {
   <div class="orderBox">
     <div class="totalPrice">
       <div>Łączna Kwota:</div>
-      <div>100 zł</div>
+      <div>{{ formattedBasketTotalValue }} zł</div>
     </div>
     <form>
       <div class="form-group">

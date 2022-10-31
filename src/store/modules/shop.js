@@ -1,11 +1,13 @@
 import router from "../../router";
 import calculateBasketItemAmount from "../../helpers/calculateBasketItemAmount";
+import calculateBasketValue from "../../helpers/calculateBasketValue";
 
 const state = () => ({
   items: [],
   categories: [],
   basket: [],
   basketItemsAmount: 0,
+  basketTotalValue: 0,
   modalAddToBasket_isActive: false,
   modalAddToBasket_item: {},
   TYP_isAcitve: false,
@@ -31,10 +33,12 @@ const mutations = {
       state.basket.push({ ...toAdd, count: 1 });
     }
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
+    state.basketTotalValue = calculateBasketValue(state.basket);
   },
   clearBasket(state) {
     state.basket = [];
     state.basketItemsAmount = 0;
+    state.basketTotalValue = 0;
   },
   toggleModal_AddToBasket(state, data) {
     state.modalAddToBasket_isActive = data.newState;
@@ -49,10 +53,12 @@ const mutations = {
   removeItemFromBasket(state, indexToRemove) {
     state.basket.splice(indexToRemove, 1);
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
+    state.basketTotalValue = calculateBasketValue(state.basket);
   },
   setItemAmount(state, { itemIndex, newAmount }) {
     state.basket[itemIndex].count = newAmount;
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
+    state.basketTotalValue = calculateBasketValue(state.basket);
   },
   setError(state, message) {
     state.errorMsg = {
