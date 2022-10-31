@@ -5,9 +5,10 @@ import orderBox from "../components/shop/basket/orderBox.vue";
 import itemsList from "../components/shop/basket/itemsList.vue";
 import TYP from "../components/shop/basket/TYP.vue";
 import emptyBasket from "../components/shop/basket/emptyBasket.vue";
+import returnToShopBtn from "../components/shop/basket/returnToShopBtn.vue";
 
 export default {
-  components: { orderBox, itemsList, TYP, emptyBasket },
+  components: { orderBox, itemsList, TYP, emptyBasket, returnToShopBtn },
   computed: {
     ...mapState({
       basketItems: (state) => state.shop.basket,
@@ -30,6 +31,7 @@ export default {
       <itemsList />
       <orderBox v-if="basketItems.length !== 0" />
     </div>
+    <returnToShopBtn v-if="basketItems.length !== 0 && !TYP_isActive" />
   </div>
 </template>
 <style scoped>
