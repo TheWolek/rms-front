@@ -13,6 +13,7 @@ export default {
   },
   mounted() {
     store.dispatch("shop/fetchItems");
+    store.commit("shop/calculateBasket");
   },
 };
 </script>

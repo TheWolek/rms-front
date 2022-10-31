@@ -1,11 +1,14 @@
 import router from "../../router";
 import calculateBasketItemAmount from "../../helpers/calculateBasketItemAmount";
 import calculateBasketValue from "../../helpers/calculateBasketValue";
+import VueCookies from "vue-cookies";
+
+// const $cookies = inject("$cookies");
 
 const state = () => ({
   items: [],
   categories: [],
-  basket: [],
+  basket: VueCookies.get("basketItems") ? VueCookies.get("basketItems") : [],
   basketItemsAmount: 0,
   basketTotalValue: 0,
   modalAddToBasket_isActive: false,
@@ -32,11 +35,13 @@ const mutations = {
     } else {
       state.basket.push({ ...toAdd, count: 1 });
     }
+    $cookies.set("basketItems", JSON.stringify(state.basket));
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
     state.basketTotalValue = calculateBasketValue(state.basket);
   },
   clearBasket(state) {
     state.basket = [];
+    $cookies.set("basketItems", JSON.stringify(state.basket));
     state.basketItemsAmount = 0;
     state.basketTotalValue = 0;
   },
@@ -52,11 +57,13 @@ const mutations = {
   },
   removeItemFromBasket(state, indexToRemove) {
     state.basket.splice(indexToRemove, 1);
+    $cookies.set("basketItems", JSON.stringify(state.basket));
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
     state.basketTotalValue = calculateBasketValue(state.basket);
   },
   setItemAmount(state, { itemIndex, newAmount }) {
     state.basket[itemIndex].count = newAmount;
+    $cookies.set("basketItems", JSON.stringify(state.basket));
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
     state.basketTotalValue = calculateBasketValue(state.basket);
   },
@@ -68,6 +75,10 @@ const mutations = {
   },
   clearError(state) {
     state.errorMsg.active = false;
+  },
+  calculateBasket(state) {
+    state.basketItemsAmount = calculateBasketItemAmount(state.basket);
+    state.basketTotalValue = calculateBasketValue(state.basket);
   },
 };
 

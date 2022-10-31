@@ -6,6 +6,7 @@ import itemsList from "../components/shop/basket/itemsList.vue";
 import TYP from "../components/shop/basket/TYP.vue";
 import emptyBasket from "../components/shop/basket/emptyBasket.vue";
 import returnToShopBtn from "../components/shop/basket/returnToShopBtn.vue";
+import store from "../store";
 
 export default {
   components: { orderBox, itemsList, TYP, emptyBasket, returnToShopBtn },
@@ -14,6 +15,9 @@ export default {
       basketItems: (state) => state.shop.basket,
       TYP_isActive: (state) => state.shop.TYP_isAcitve,
     }),
+  },
+  mounted() {
+    store.commit("shop/calculateBasket");
   },
 };
 </script>
