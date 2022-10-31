@@ -54,13 +54,14 @@ export default {
 }
 
 .name {
-  padding: 0 1em;
+  padding-left: 0.8em;
 }
 
 .leftSide,
 .rightSide {
   display: flex;
   align-items: center;
+  max-width: 60%;
 }
 
 .removeItem {
