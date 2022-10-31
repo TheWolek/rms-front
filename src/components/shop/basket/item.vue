@@ -67,6 +67,11 @@ export default {
 .removeItem {
   font-weight: 500;
   cursor: pointer;
+  padding: 0.1em 0.3em;
+}
+
+.removeItem:hover {
+  background: #eee;
 }
 
 .rightSide {

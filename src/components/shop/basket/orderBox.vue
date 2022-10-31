@@ -94,6 +94,10 @@ export default {
   cursor: pointer;
 }
 
+.buyBtn:hover {
+  background: rgb(0 76 0);
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
