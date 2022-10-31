@@ -10,6 +10,10 @@ const state = () => ({
   modalAddToBasket_item: {},
   TYP_isAcitve: false,
   TYPData: {},
+  errorMsg: {
+    active: false,
+    message: "",
+  },
 });
 
 const mutations = {
@@ -50,10 +54,19 @@ const mutations = {
     state.basket[itemIndex].count = newAmount;
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
   },
+  setError(state, message) {
+    state.errorMsg = {
+      active: true,
+      message: message,
+    };
+  },
+  clearError(state) {
+    state.errorMsg.active = false;
+  },
 };
 
 const actions = {
-  fetchItems({ commit, state }) {
+  fetchItems({ commit, state, dispatch }) {
     const requestOptions = {
       method: "GET",
       headers: {
@@ -61,20 +74,25 @@ const actions = {
         "x-api-key": import.meta.env.VITE_API_KEY,
       },
     };
-    fetch(
-      `http://${import.meta.env.VITE_API_HOST}:3000/dishes`,
-      requestOptions
-    ).then(async (res) => {
-      const resData = await res.json();
-      commit("setItems", resData);
-    });
+    fetch(`http://${import.meta.env.VITE_API_HOST}:3000/dishes`, requestOptions)
+      .then(async (res) => {
+        const resData = await res.json();
+        commit("setItems", resData);
+      })
+      .catch((err) => {
+        dispatch("displayError", "wystąpił błąd przy pobieraniu danych");
+      });
     fetch(
       `http://${import.meta.env.VITE_API_HOST}:3000/dishes/categories`,
       requestOptions
-    ).then(async (res) => {
-      const resData = await res.json();
-      commit("setCategories", resData);
-    });
+    )
+      .then(async (res) => {
+        const resData = await res.json();
+        commit("setCategories", resData);
+      })
+      .catch((err) => {
+        dispatch("displayError", "wystąpił błąd przy pobieraniu danych");
+      });
   },
   submitOrder({ commit, state }, basketOptions) {
     let items = [];
@@ -111,6 +129,13 @@ const actions = {
         router.push("/");
       }, 6000);
     });
+  },
+  displayError({ commit, state }, errorMsg) {
+    commit("setError", errorMsg);
+
+    setTimeout(() => {
+      commit("clearError");
+    }, 3000);
   },
 };
 

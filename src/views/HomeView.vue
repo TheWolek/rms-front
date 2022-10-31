@@ -8,6 +8,7 @@ export default {
       basketItemCount(state) {
         return state.shop.basketItemsAmount;
       },
+      errorMsg: (state) => state.shop.errorMsg,
     }),
   },
   mounted() {
@@ -17,6 +18,9 @@ export default {
 </script>
 
 <template>
+  <div class="snackBar" :class="{ active: errorMsg.active }">
+    {{ errorMsg.message }}
+  </div>
   <header>
     <div class="wrapper">
       <nav>
