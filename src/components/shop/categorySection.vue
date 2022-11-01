@@ -5,13 +5,27 @@ import item from "./item.vue";
 
 export default {
   props: ["cat"],
+  data() {
+    return {
+      id: this.cat.category_id,
+      title: this.cat.category_displayName,
+    };
+  },
+  mounted() {
+    this.$watch("cat", (newVal) => {
+      console.log("kurwaaa");
+      if (newVal !== undefined) {
+        this.id = this.cat.category_id;
+        this.title = this.cat.category_displayName;
+      }
+    });
+  },
   components: { item },
   computed: {
     ...mapState({
+      selectedCategory: (state) => state.shop.selectedCategory,
       items(state) {
-        return state.shop.items.filter(
-          (item) => item.category_id == this.cat.category_id
-        );
+        return state.shop.items.filter((item) => item.category_id == this.id);
       },
     }),
   },
@@ -19,7 +33,7 @@ export default {
 </script>
 <template>
   <div class="categorySection">
-    <h3>{{ cat.category_displayName }}</h3>
+    <h3>{{ title }}</h3>
     <div class="items">
       <item v-for="item in items" :key="item.id" :item="item" />
     </div>

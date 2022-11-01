@@ -81,9 +81,6 @@ export default {
 }
 
 @media (min-width: 1024px) {
-  .itemTile + .itemTile {
-  }
-
   .itemTile:nth-child(4n + 1) {
     margin: 0;
   }

@@ -8,7 +8,7 @@ export default {
   components: { CategorySection, modal_addToBasket, categorySelect },
   computed: {
     ...mapState({
-      categories: (state) => state.shop.categories,
+      selectedCategory: (state) => state.shop.selectedCategory,
       modal_addToBasket_isActive: (state) =>
         state.shop.modalAddToBasket_isActive,
     }),
@@ -21,7 +21,7 @@ export default {
     <modal_addToBasket v-if="modal_addToBasket_isActive" />
     <categorySelect />
     <div id="shopView">
-      <CategorySection v-for="cat in categories" :key="cat.id" :cat="cat" />
+      <CategorySection :cat="selectedCategory" />
     </div>
   </div>
 </template>
@@ -50,7 +50,5 @@ export default {
 }
 
 @media (min-width: 1400px) {
-  #shopView {
-  }
 }
 </style>

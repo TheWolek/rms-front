@@ -1,7 +1,11 @@
 <script>
 import { mapState } from "vuex";
+import store from "../../store";
+
+import categoryBtn from "./categoryBtn.vue";
 
 export default {
+  components: { categoryBtn },
   computed: {
     ...mapState({
       categories: (state) => state.shop.categories,
@@ -12,9 +16,11 @@ export default {
 <template>
   <div id="listWrap">
     <div class="list">
-      <div v-for="cat in this.categories" class="category">
-        {{ cat.category_displayName }}
-      </div>
+      <categoryBtn
+        v-for="cat in this.categories"
+        :cat="cat"
+        :key="cat.category_id"
+      />
     </div>
   </div>
 </template>
@@ -39,16 +45,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-}
-
-.category {
-  cursor: pointer;
-  padding: 0.5em;
-  background: #eee;
-}
-
-.category:hover {
-  background: rgb(184, 184, 184);
 }
 
 @media (min-width: 1024px) {

@@ -8,6 +8,10 @@ import VueCookies from "vue-cookies";
 const state = () => ({
   items: [],
   categories: [],
+  selectedCategory: {
+    category_id: 1,
+    category_displayName: "",
+  },
   basket: VueCookies.get("basketItems") ? VueCookies.get("basketItems") : [],
   basketItemsAmount: 0,
   basketTotalValue: 0,
@@ -24,6 +28,12 @@ const state = () => ({
 const mutations = {
   setItems(state, items) {
     state.items = items;
+  },
+  selectCategory(state, category_id) {
+    let filtered = state.categories.find(
+      (item) => item.category_id === category_id
+    );
+    state.selectedCategory = filtered;
   },
   setCategories(state, categories) {
     state.categories = categories;
@@ -95,6 +105,7 @@ const actions = {
       .then(async (res) => {
         const resData = await res.json();
         commit("setItems", resData);
+        commit("selectCategory", 1);
       })
       .catch((err) => {
         dispatch("displayError", "wystąpił błąd przy pobieraniu danych");
@@ -106,6 +117,7 @@ const actions = {
       .then(async (res) => {
         const resData = await res.json();
         commit("setCategories", resData);
+        commit("selectCategory", 1);
       })
       .catch((err) => {
         dispatch("displayError", "wystąpił błąd przy pobieraniu danych");
