@@ -42,7 +42,6 @@ export default {
 }
 
 .itemTile + .itemTile {
-  margin-top: 0.5em;
 }
 
 .itemTile .imgWrap {
@@ -83,8 +82,6 @@ export default {
 
 @media (min-width: 1024px) {
   .itemTile + .itemTile {
-    margin-top: 0;
-    margin-left: 1em;
   }
 
   .itemTile:nth-child(4n + 1) {

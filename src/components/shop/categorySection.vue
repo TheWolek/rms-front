@@ -35,11 +35,15 @@ h3 {
   margin-top: 1em;
 }
 
+.categorySection .items {
+  display: grid;
+  gap: 1em;
+}
+
 @media (min-width: 1024px) {
   .categorySection .items {
-    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    row-gap: 2em;
+    gap: 1.5em 1em;
   }
 }
 </style>

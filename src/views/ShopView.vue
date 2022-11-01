@@ -2,9 +2,10 @@
 import { mapState } from "vuex";
 import CategorySection from "../components/shop/categorySection.vue";
 import modal_addToBasket from "../components/shop/modal_addToBasket.vue";
+import categorySelect from "../components/shop/categorySelect.vue";
 
 export default {
-  components: { CategorySection, modal_addToBasket },
+  components: { CategorySection, modal_addToBasket, categorySelect },
   computed: {
     ...mapState({
       categories: (state) => state.shop.categories,
@@ -16,8 +17,9 @@ export default {
 };
 </script>
 <template>
-  <div>
+  <div class="wrap">
     <modal_addToBasket v-if="modal_addToBasket_isActive" />
+    <categorySelect />
     <div id="shopView">
       <CategorySection v-for="cat in categories" :key="cat.id" :cat="cat" />
     </div>
@@ -35,13 +37,20 @@ export default {
   }
 
   #shopView {
-    width: 85%;
+    width: 100%;
+    padding: 1em 0 1em 1em;
+  }
+
+  .wrap {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+    justify-items: center;
+    margin: 0 2em;
   }
 }
 
 @media (min-width: 1400px) {
   #shopView {
-    width: 75%;
   }
 }
 </style>
