@@ -13,7 +13,6 @@ export default {
   },
   mounted() {
     this.$watch("cat", (newVal) => {
-      console.log("kurwaaa");
       if (newVal !== undefined) {
         this.id = this.cat.category_id;
         this.title = this.cat.category_displayName;

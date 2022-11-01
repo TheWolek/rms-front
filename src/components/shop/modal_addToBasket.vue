@@ -51,7 +51,7 @@ export default {
 <style scoped>
 .modalBg {
   position: absolute;
-  top: -10vh;
+  top: 0;
   left: 0;
   z-index: 999;
   width: 100vw;

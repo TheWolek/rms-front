@@ -17,8 +17,8 @@ export default {
 };
 </script>
 <template>
+  <modal_addToBasket v-if="modal_addToBasket_isActive" />
   <div class="wrap">
-    <modal_addToBasket v-if="modal_addToBasket_isActive" />
     <categorySelect />
     <div id="shopView">
       <CategorySection :cat="selectedCategory" />
@@ -29,6 +29,10 @@ export default {
 #shopView {
   padding: 1em;
   margin: 0 auto;
+}
+
+.wrap {
+  height: 100vh;
 }
 
 @media (min-width: 1024px) {
