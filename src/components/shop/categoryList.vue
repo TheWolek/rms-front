@@ -37,10 +37,6 @@ export default {
   transition: transform 0.2s ease;
 }
 
-#listWrap.active {
-  transform: translateX(100%);
-}
-
 .list {
   display: flex;
   flex-direction: column;
@@ -51,6 +47,12 @@ export default {
   #listWrap {
     position: static;
     padding: 1em 1em 0 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  #listWrap.active {
+    transform: translateX(100%);
   }
 }
 </style>
