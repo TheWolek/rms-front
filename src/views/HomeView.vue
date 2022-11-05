@@ -106,14 +106,8 @@ nav a img {
 
 @media (min-width: 1024px) {
   header .wrapper {
-    width: 85%;
+    width: 90%;
     margin: 0 auto;
-  }
-}
-
-@media (min-width: 1400px) {
-  header .wrapper {
-    width: 75%;
   }
 }
 </style>

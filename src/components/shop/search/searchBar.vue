@@ -25,7 +25,7 @@ export default {
     <input
       id="searchInput"
       type="search"
-      placeholder="wyszukaj produktu"
+      placeholder="wyszukaj produkt"
       v-model="searchText"
     />
   </form>
@@ -43,5 +43,12 @@ export default {
   padding: 0.3em 0.5em;
   line-height: 20px;
   font-size: 14px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .searchWrap {
+    width: 40%;
+  }
 }
 </style>
