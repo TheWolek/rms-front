@@ -9,15 +9,24 @@ export default {
   computed: {
     ...mapState({
       categories: (state) => state.shop.categories,
+      searchResultsCategories: (state) => state.shop.searchResultsCategories,
+      searchActive: (state) => state.shop.searchActive,
     }),
   },
 };
 </script>
 <template>
   <div id="listWrap">
-    <div class="list">
+    <div v-if="!searchActive" class="list">
       <categoryBtn
         v-for="cat in this.categories"
+        :cat="cat"
+        :key="cat.category_id"
+      />
+    </div>
+    <div v-if="searchActive" class="list">
+      <categoryBtn
+        v-for="cat in this.searchResultsCategories"
         :cat="cat"
         :key="cat.category_id"
       />

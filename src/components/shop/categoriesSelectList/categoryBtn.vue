@@ -13,15 +13,24 @@ export default {
   computed: {
     ...mapState({
       selectedCategory: (state) => state.shop.selectedCategory.category_id,
+      searchActive: (state) => state.shop.searchActive,
     }),
     is_Active() {
-      return this.selectedCategory === this.id ? true : false;
+      return !this.searchActive && this.selectedCategory === this.id
+        ? true
+        : false;
     },
   },
   methods: {
     filterItems(cat_id) {
-      store.commit("shop/selectCategory", cat_id);
-      document.getElementById("listWrap").classList.toggle("active");
+      if (!this.searchActive) {
+        store.commit("shop/selectCategory", cat_id);
+        document.getElementById("listWrap").classList.toggle("active");
+      } else {
+        // store.commit("shop/selectCategory", cat_id);
+        store.dispatch("shop/narrowResultCategories", cat_id);
+        document.getElementById("listWrap").classList.toggle("active");
+      }
     },
   },
 };

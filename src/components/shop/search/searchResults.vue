@@ -16,7 +16,7 @@ export default {
 <template>
   <emptyResults v-if="searchResultsCategories.length === 0" />
   <div v-for="cat in searchResultsCategories">
-    <h3>{{ cat.category_displayName }}</h3>
+    <h3 v-if="cat.items.length !== 0">{{ cat.category_displayName }}</h3>
     <div class="items">
       <item v-for="item in cat.items" :key="item.id" :item="item" />
     </div>

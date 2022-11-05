@@ -25,6 +25,7 @@ const state = () => ({
   },
   searchActive: false,
   searchResultsCategories: [],
+  searchText: "",
 });
 
 const mutations = {
@@ -92,9 +93,15 @@ const mutations = {
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
     state.basketTotalValue = calculateBasketValue(state.basket);
   },
+  setSearchText(state, text) {
+    state.searchText = text;
+  },
   setSearchResults(state, categories) {
     state.searchActive = true;
     state.searchResultsCategories = categories;
+  },
+  updateSearchResults(state, { id, newData }) {
+    state.searchResultsCategories[id] = newData;
   },
   exitSearchResults(state) {
     state.searchActive = false;
@@ -176,9 +183,9 @@ const actions = {
       commit("clearError");
     }, 3000);
   },
-  doSearchByText({ commit, state }, searchText) {
+  doSearchByText({ commit, state }) {
     let filtered = state.items.filter((i) =>
-      i.displayName.toLowerCase().includes(searchText.toLowerCase())
+      i.displayName.toLowerCase().includes(state.searchText.toLowerCase())
     );
     let categories = [];
     filtered.forEach((i) => {
@@ -196,6 +203,19 @@ const actions = {
       cat.items = items;
     });
     commit("setSearchResults", categories);
+  },
+  narrowResultCategories({ commit, state, dispatch }, selectedCategoryId) {
+    dispatch("doSearchByText");
+    let itemsByCategoryIndex = state.searchResultsCategories.findIndex(
+      (i) => i.category_id === selectedCategoryId
+    );
+
+    state.searchResultsCategories.forEach((cat, index) => {
+      if (index !== itemsByCategoryIndex) {
+        cat.items = [];
+        commit("updateSearchResults", { id: index, newData: cat });
+      }
+    });
   },
 };
 

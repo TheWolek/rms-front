@@ -12,7 +12,8 @@ export default {
       if (this.searchText === "") {
         return this.exitSearchResults();
       }
-      store.dispatch("shop/doSearchByText", this.searchText);
+      store.commit("shop/setSearchText", this.searchText);
+      store.dispatch("shop/doSearchByText");
     },
     exitSearchResults() {
       store.commit("shop/exitSearchResults");
