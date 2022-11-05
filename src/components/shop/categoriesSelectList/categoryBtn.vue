@@ -14,11 +14,15 @@ export default {
     ...mapState({
       selectedCategory: (state) => state.shop.selectedCategory.category_id,
       searchActive: (state) => state.shop.searchActive,
+      searchResultSelectedCategory: (state) =>
+        state.shop.searchResultSelectedCategory,
     }),
     is_Active() {
-      return !this.searchActive && this.selectedCategory === this.id
-        ? true
-        : false;
+      if (this.searchActive) {
+        return this.searchResultSelectedCategory === this.id ? true : false;
+      } else {
+        return this.selectedCategory === this.id ? true : false;
+      }
     },
   },
   methods: {

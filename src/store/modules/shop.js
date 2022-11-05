@@ -26,6 +26,7 @@ const state = () => ({
   searchActive: false,
   searchResultsCategories: [],
   searchText: "",
+  searchResultSelectedCategory: null,
 });
 
 const mutations = {
@@ -99,6 +100,7 @@ const mutations = {
   setSearchResults(state, categories) {
     state.searchActive = true;
     state.searchResultsCategories = categories;
+    state.searchResultSelectedCategory = null;
   },
   updateSearchResults(state, { id, newData }) {
     state.searchResultsCategories[id] = newData;
@@ -106,6 +108,10 @@ const mutations = {
   exitSearchResults(state) {
     state.searchActive = false;
     state.searchResultsCategories = [];
+    state.searchResultSelectedCategory = null;
+  },
+  setSearchResultSelectedCategory(state, category) {
+    state.searchResultSelectedCategory = category;
   },
 };
 
@@ -216,6 +222,8 @@ const actions = {
         commit("updateSearchResults", { id: index, newData: cat });
       }
     });
+
+    commit("setSearchResultSelectedCategory", selectedCategoryId);
   },
 };
 
