@@ -2,6 +2,8 @@
 import { mapState } from "vuex";
 import store from "../store";
 
+import searchBar from "../components/shop/search/searchBar.vue";
+
 export default {
   computed: {
     ...mapState({
@@ -11,9 +13,18 @@ export default {
       errorMsg: (state) => state.shop.errorMsg,
     }),
   },
+  components: {
+    searchBar,
+  },
   mounted() {
     store.dispatch("shop/fetchItems");
     store.commit("shop/calculateBasket");
+  },
+  methods: {
+    exitSearchResults() {
+      store.commit("shop/exitSearchResults");
+      document.getElementById("searchInput").value = "";
+    },
   },
 };
 </script>
@@ -25,9 +36,10 @@ export default {
   <header>
     <div class="wrapper">
       <nav>
-        <RouterLink to="/"
+        <RouterLink to="/" @click="exitSearchResults"
           ><img src="@/assets/logo.svg" alt="logo"
         /></RouterLink>
+        <searchBar />
         <RouterLink to="/basket"
           ><img src="@/assets/cart.png" alt="basket" id="basketIcon" /> Koszyk
           <div class="basketItemCounter" v-if="basketItemCount !== 0">
@@ -46,7 +58,7 @@ header {
 }
 
 header .wrapper {
-  padding: 0 2em;
+  padding: 0 1em;
 }
 
 nav {

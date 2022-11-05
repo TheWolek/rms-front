@@ -3,14 +3,21 @@ import { mapState } from "vuex";
 import CategorySection from "../components/shop/categorySection.vue";
 import modal_addToBasket from "../components/shop/modal_addToBasket.vue";
 import categorySelect from "../components/shop/categorySelect.vue";
+import searchResults from "../components/shop/search/searchResults.vue";
 
 export default {
-  components: { CategorySection, modal_addToBasket, categorySelect },
+  components: {
+    CategorySection,
+    modal_addToBasket,
+    categorySelect,
+    searchResults,
+  },
   computed: {
     ...mapState({
       selectedCategory: (state) => state.shop.selectedCategory,
       modal_addToBasket_isActive: (state) =>
         state.shop.modalAddToBasket_isActive,
+      searchActive: (state) => state.shop.searchActive,
     }),
   },
   methods: {},
@@ -21,7 +28,8 @@ export default {
   <div class="wrap">
     <categorySelect />
     <div id="shopView">
-      <CategorySection :cat="selectedCategory" />
+      <CategorySection v-if="!searchActive" :cat="selectedCategory" />
+      <searchResults v-if="searchActive" />
     </div>
   </div>
 </template>

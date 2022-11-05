@@ -23,6 +23,8 @@ const state = () => ({
     active: false,
     message: "",
   },
+  searchActive: false,
+  searchResultsCategories: [],
 });
 
 const mutations = {
@@ -89,6 +91,14 @@ const mutations = {
   calculateBasket(state) {
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
     state.basketTotalValue = calculateBasketValue(state.basket);
+  },
+  setSearchResults(state, categories) {
+    state.searchActive = true;
+    state.searchResultsCategories = categories;
+  },
+  exitSearchResults(state) {
+    state.searchActive = false;
+    state.searchResultsCategories = [];
   },
 };
 
@@ -165,6 +175,27 @@ const actions = {
     setTimeout(() => {
       commit("clearError");
     }, 3000);
+  },
+  doSearchByText({ commit, state }, searchText) {
+    let filtered = state.items.filter((i) =>
+      i.displayName.toLowerCase().includes(searchText.toLowerCase())
+    );
+    let categories = [];
+    filtered.forEach((i) => {
+      let found = categories.find((cat) => cat.category_id === i.category_id);
+      if (!found) {
+        categories.push({
+          category_id: i.category_id,
+          category_displayName: i.category_displayName,
+        });
+      }
+    });
+
+    categories.forEach((cat) => {
+      let items = filtered.filter((i) => i.category_id === cat.category_id);
+      cat.items = items;
+    });
+    commit("setSearchResults", categories);
   },
 };
 
