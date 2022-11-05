@@ -2,7 +2,7 @@
 import { mapState } from "vuex";
 import CategorySection from "../components/shop/categorySection.vue";
 import modal_addToBasket from "../components/shop/modal_addToBasket.vue";
-import categorySelect from "../components/shop/categorySelect.vue";
+import categorySelect from "../components/shop/categoriesSelectList/categorySelect.vue";
 import searchResults from "../components/shop/search/searchResults.vue";
 
 export default {
