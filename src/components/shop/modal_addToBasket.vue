@@ -4,13 +4,43 @@ import router from "../../router";
 import store from "../../store";
 
 export default {
+  data() {
+    return {
+      selectedDrink: this.getDefaultDrink,
+    };
+  },
   computed: {
     ...mapState({
       basketItem: (state) => state.shop.modalAddToBasket_item,
+      items: (state) => state.shop.items,
+      basket: (state) => state.shop.basket,
     }),
+    isBunddle() {
+      return this.basketItem.isBunddle;
+    },
+    getItemIndex() {
+      return this.basket.findIndex((i) => i.dishId === this.basketItem.dishId);
+    },
+    getDefaultDrink() {
+      return this.basketItem.optionalDrinks[0];
+    },
   },
   methods: {
     goToBasket() {
+      if (this.isBunddle) {
+        let bunddleItems = this.basketItem.bunddleItems;
+        bunddleItems.pop();
+        bunddleItems.push(
+          this.selectedDrink !== undefined
+            ? this.selectedDrink
+            : this.getDefaultDrink
+        );
+        console.log(bunddleItems);
+        store.commit("shop/editBasketItemBunddle", {
+          index: this.getItemIndex,
+          newBunddleItems: bunddleItems,
+        });
+      }
       store.commit("shop/toggleModal_AddToBasket", {
         item: {},
         newState: false,
@@ -23,6 +53,9 @@ export default {
         newState: false,
       });
     },
+    getItemDisplayName(id) {
+      return this.items.find((i) => i.dishId === id).displayName;
+    },
   },
 };
 </script>
@@ -32,10 +65,31 @@ export default {
       <div class="header"><h2>Dodaj produkt do koszyka</h2></div>
       <div class="content">
         <div class="item">
-          <div class="imgWrap"></div>
+          <div class="imgWrap" :class="{ small: isBunddle }"></div>
           <div class="details">
             <div class="name">{{ basketItem.displayName }}</div>
             <div class="price">{{ basketItem.price }} zł</div>
+            <div class="chooseDrink" v-if="isBunddle">
+              <h3>Wybierz napój do zestawu:</h3>
+              <div class="chooseDrinkItems">
+                <label
+                  v-for="(drink, index) in basketItem.optionalDrinks"
+                  :key="drink"
+                  :for="drink"
+                >
+                  <input
+                    class="tile"
+                    type="radio"
+                    name="chooseDrink"
+                    :id="drink"
+                    :checked="index === 0"
+                    v-model="selectedDrink"
+                    :value="drink"
+                  />
+                  {{ getItemDisplayName(drink) }}</label
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -110,6 +164,10 @@ export default {
   width: 75vw;
   height: 400px;
   background: #000;
+}
+
+.imgWrap.small {
+  height: 250px;
 }
 
 .details {

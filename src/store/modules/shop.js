@@ -53,6 +53,9 @@ const mutations = {
     state.basketItemsAmount = calculateBasketItemAmount(state.basket);
     state.basketTotalValue = calculateBasketValue(state.basket);
   },
+  editBasketItemBunddle(state, { index, newBunddleItems }) {
+    state.basket[index].bunddleItems = newBunddleItems;
+  },
   clearBasket(state) {
     state.basket = [];
     $cookies.set("basketItems", JSON.stringify(state.basket));
