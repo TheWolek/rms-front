@@ -76,9 +76,9 @@ export default {
                   v-for="(drink, index) in basketItem.optionalDrinks"
                   :key="drink"
                   :for="drink"
+                  class="tile"
                 >
                   <input
-                    class="tile"
                     type="radio"
                     name="chooseDrink"
                     :id="drink"
@@ -86,7 +86,7 @@ export default {
                     v-model="selectedDrink"
                     :value="drink"
                   />
-                  {{ getItemDisplayName(drink) }}</label
+                  <span>{{ getItemDisplayName(drink) }}</span></label
                 >
               </div>
             </div>
@@ -179,6 +179,37 @@ export default {
 .details .name {
   font-weight: 600;
   font-size: 1.1rem;
+}
+
+.details .tile {
+  border: 1px solid var(--color-text);
+  padding: 0.6em;
+  cursor: pointer;
+}
+
+.details .tile span {
+  margin-left: 0.8em;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.details .chooseDrinkItems {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+@media (min-width: 768px) {
+  .details .chooseDrinkItems {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .details .tile {
+    width: 45%;
+    padding: 0.8em;
+  }
 }
 
 @media (min-width: 1024px) {

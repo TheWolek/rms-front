@@ -23,15 +23,7 @@ export default {
   <div class="item">
     <div class="leftSide">
       <div class="imgWrap"></div>
-      <div class="itemsNames">
-        <div class="name">{{ item.displayName }}</div>
-        <bunddleItems
-          v-for="bi in item.bunddleItems"
-          :key="bi"
-          class="bunddleItemName"
-          :bi="bi"
-        />
-      </div>
+      <div class="name">{{ item.displayName }}</div>
     </div>
 
     <div class="rightSide">
@@ -45,14 +37,23 @@ export default {
       <div class="price">{{ item.price }} zł</div>
       <div class="removeItem" @click="deleteItem">Usuń</div>
     </div>
+    <ul class="bunddleItems">
+      <bunddleItems
+        v-for="bi in item.bunddleItems"
+        :key="bi"
+        class="bunddleItemName"
+        :bi="bi"
+      />
+    </ul>
   </div>
 </template>
 <style scoped>
 .item {
   width: 90%;
   border: 1px solid gray;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  justify-items: flex-start;
   align-items: center;
   padding: 1em;
   margin: 0 auto;
@@ -65,18 +66,30 @@ export default {
 }
 
 .name {
-  padding-left: 0.8em;
+  font-weight: 600;
+  padding-left: 0.5em;
+  width: 75%;
+}
+
+.bunddleItems {
+  grid-column: 1/3;
+  justify-self: flex-start;
+  list-style: "-";
+  margin-top: 0.4em;
 }
 
 .bunddleItemName {
-  padding-left: 1.5em;
+  padding-left: 0.5em;
 }
 
 .leftSide,
 .rightSide {
   display: flex;
   align-items: center;
-  max-width: 60%;
+}
+
+.leftSide {
+  width: 100%;
 }
 
 .removeItem {
@@ -91,11 +104,14 @@ export default {
 
 .rightSide {
   gap: 0.8em;
+  justify-self: flex-end;
 }
-
 @media (min-width: 1024px) {
   .item {
     width: 100%;
+  }
+  .name {
+    width: auto;
   }
 }
 </style>

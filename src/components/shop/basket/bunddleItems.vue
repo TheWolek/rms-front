@@ -14,6 +14,6 @@ export default {
 };
 </script>
 <template>
-  <div>{{ getItemDisplayName }}</div>
+  <li>{{ getItemDisplayName }}</li>
 </template>
 <style scoped></style>
