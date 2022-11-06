@@ -55,6 +55,7 @@ const mutations = {
   },
   editBasketItemBunddle(state, { index, newBunddleItems }) {
     state.basket[index].bunddleItems = newBunddleItems;
+    $cookies.set("basketItems", JSON.stringify(state.basket));
   },
   clearBasket(state) {
     state.basket = [];
@@ -151,23 +152,34 @@ const actions = {
   },
   submitOrder({ commit, state }, basketOptions) {
     let items = [];
+    let bunddleItems = [];
     for (let i = 0; i < state.basket.length; i++) {
       const el = state.basket[i];
       for (let j = 0; j < el.count; j++) {
         items.push(el.dishId);
+        if (el.bunddleItems !== null) {
+          bunddleItems.push([...el.bunddleItems]);
+        }
       }
     }
+
+    let body = {
+      items: items,
+      paymentMethod: basketOptions.paymentMethod,
+      takeAway: basketOptions.takeAway,
+    };
+
+    if (bunddleItems.length !== 0) {
+      body.bunddleItems = bunddleItems;
+    }
+
     const requestOptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "x-api-key": import.meta.env.VITE_API_KEY,
       },
-      body: JSON.stringify({
-        items: items,
-        paymentMethod: basketOptions.paymentMethod,
-        takeAway: basketOptions.takeAway,
-      }),
+      body: JSON.stringify(body),
     };
 
     fetch(

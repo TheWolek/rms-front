@@ -1,8 +1,11 @@
 <script>
 import store from "../../../store";
 
+import bunddleItems from "./bunddleItems.vue";
+
 export default {
   props: ["item", "itemIndex"],
+  components: { bunddleItems },
   methods: {
     deleteItem() {
       store.commit("shop/removeItemFromBasket", this.itemIndex);
@@ -20,7 +23,15 @@ export default {
   <div class="item">
     <div class="leftSide">
       <div class="imgWrap"></div>
-      <div class="name">{{ item.displayName }}</div>
+      <div class="itemsNames">
+        <div class="name">{{ item.displayName }}</div>
+        <bunddleItems
+          v-for="bi in item.bunddleItems"
+          :key="bi"
+          class="bunddleItemName"
+          :bi="bi"
+        />
+      </div>
     </div>
 
     <div class="rightSide">
@@ -55,6 +66,10 @@ export default {
 
 .name {
   padding-left: 0.8em;
+}
+
+.bunddleItemName {
+  padding-left: 1.5em;
 }
 
 .leftSide,
