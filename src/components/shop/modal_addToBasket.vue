@@ -35,7 +35,6 @@ export default {
             ? this.selectedDrink
             : this.getDefaultDrink
         );
-        console.log(bunddleItems);
         store.commit("shop/editBasketItemBunddle", {
           index: this.getItemIndex,
           newBunddleItems: bunddleItems,
